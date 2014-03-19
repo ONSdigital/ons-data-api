@@ -1,3 +1,10 @@
 language: ruby
 rvm:
 - 2.1.0
+deploy:
+  provider: heroku
+  api_key:
+    secure: hZ0+rw8RyRTlW0auPVBKYX/YhlCQR0zuC8rDHUZGvLMI/ECLK3L7lHQjmpYv7CL3iRjVjNnnFufD2ax5S+50pR60A14vLArapS24EEVxyAWZTPqFZp4nkXKSphDdFt8r4BfQTb3m9ezQ3VM1l0E93G0DitBtAZcTjbPThG0oMKg=
+  app: fierce-oasis-8682
+  on:
+    repo: ONSdigital/ons-data-api
