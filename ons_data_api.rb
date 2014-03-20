@@ -3,6 +3,7 @@ require 'oj'
 require 'mongoid'
 require 'rack/conneg'
 require_relative 'lib/presenters/observation_presenter'
+require 'ons_data_models/require_all'
 
 Mongoid.load!(File.expand_path("mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
