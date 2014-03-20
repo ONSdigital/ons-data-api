@@ -6,7 +6,7 @@ ruby '2.1.0'
 gem 'sinatra', '1.4.4'
 gem 'oj', '2.6.0'
 gem 'rake'
-
+gem 'rack-conneg'
 gem 'ons_data_models', github: "ONSdigital/ons_data_models"
 
 group :development, :test do
