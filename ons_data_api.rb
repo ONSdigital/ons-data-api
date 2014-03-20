@@ -20,8 +20,11 @@ class OnsDataApi < Sinatra::Base
     end
   end
 
-  get '/hello.json' do
-    Oj.dump 'hello' => 'what up?'
+  get '/hello' do
+    respond_to do |wants|
+      wants.json { Oj.dump 'hello' => 'what up?' }
+      wants.other { error_406 }
+    end
   end
 
   get '/series/release/dataset/:observation' do
