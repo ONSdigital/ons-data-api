@@ -1,10 +1,9 @@
 require 'sinatra'
 require 'oj'
 require 'mongoid'
-require 'ons_data_models/require_all'
 require 'rack/conneg'
-
-require 'presenters/observation_presenter'
+require_relative 'lib/presenters/observation_presenter'
+require 'ons_data_models/require_all'
 
 Mongoid.load!(File.expand_path("mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
@@ -22,8 +21,11 @@ class OnsDataApi < Sinatra::Base
     end
   end
 
-  get '/hello.json' do
-    Oj.dump 'hello' => 'what up?'
+  get '/hello' do
+    respond_to do |wants|
+      wants.json { Oj.dump 'hello' => 'what up?' }
+      wants.other { error_406 }
+    end
   end
 
   get '/series/release/dataset/:observation' do
