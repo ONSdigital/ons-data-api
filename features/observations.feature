@@ -12,5 +12,5 @@ Feature:
     Then the response status should be "200"
     And the response content type should be JSON
     And the JSON response should have "$.measure" with the text "111.5"
-    And the JSON response should have "$.date" with the text "2013-12"
-    And the JSON response should have "$.cdid" with the text "mc6a"
+    And the JSON response should have "$.date" with the text "December 2013"
+    And the JSON response should have "$.cdid" with the text "Alcoholic Beverages - SPECIAL INDEX FOR USE IN NSO - Manu incl duty"
