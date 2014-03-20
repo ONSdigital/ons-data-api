@@ -1,5 +1,8 @@
 require 'sinatra'
 require 'oj'
+require 'mongoid'
+
+Mongoid.load!(File.expand_path("mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
 class OnsDataApi < Sinatra::Base
 

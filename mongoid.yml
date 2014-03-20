@@ -1,0 +1,18 @@
+production:
+  sessions:
+    default:
+      database: ons_data_api_production
+      hosts:
+        - localhost
+development:
+  sessions:
+    default:
+      database: ons_data_api_development
+      hosts:
+        - localhost
+test:
+  sessions:
+    default:
+      database: ons_data_api_test
+      hosts:
+        - localhost
