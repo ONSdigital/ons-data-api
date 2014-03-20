@@ -1,9 +1,7 @@
 production:
   sessions:
     default:
-      database: ons_data_api_production
-      hosts:
-        - localhost
+      uri: <%= ENV['MONGOHQ_URL'] %>
 development:
   sessions:
     default:
