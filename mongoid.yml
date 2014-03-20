@@ -2,17 +2,15 @@ production:
   sessions:
     default:
       uri: <%= ENV['MONGOHQ_URL'] %>
-
 development:
   sessions:
     default:
-      database: STATS_HORSE 
+      database: ons_data_api_development
       hosts:
         - localhost
-
 test:
   sessions:
     default:
-      database: STATS_HORSE 
+      database: ons_data_api_test
       hosts:
         - localhost
