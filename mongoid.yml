@@ -1,0 +1,18 @@
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+
+development:
+  sessions:
+    default:
+      database: STATS_HORSE 
+      hosts:
+        - localhost
+
+test:
+  sessions:
+    default:
+      database: STATS_HORSE 
+      hosts:
+        - localhost
