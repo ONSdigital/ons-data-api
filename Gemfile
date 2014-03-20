@@ -20,5 +20,6 @@ group :development, :test do
   gem 'rack-test'
   gem 'guard'
   gem 'guard-cucumber'
+  gem 'factory_girl'
   
 end
