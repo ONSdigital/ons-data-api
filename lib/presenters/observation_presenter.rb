@@ -6,7 +6,9 @@ class ObservationPresenter
   
   def present
     {
-      "measure" => @observation.measure
+      "measure" => @observation.measure, 
+      "date" => @observation.date,
+      "cdid" => @observation.cdid
     }
   end
   
