@@ -1,6 +1,10 @@
 require 'sinatra'
 require 'oj'
 
-get '/hello.json' do
-  Oj.dump 'hello' => 'what up?'
+class OnsDataApi < Sinatra::Base
+
+  get '/hello.json' do
+    Oj.dump 'hello' => 'what up?'
+  end
+
 end
