@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'oj'
+require 'thin'
 require 'mongoid'
 require 'rack/conneg'
 require_relative 'lib/presenters/observation_presenter'
