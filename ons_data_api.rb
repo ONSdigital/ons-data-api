@@ -1,10 +1,8 @@
 require 'sinatra'
 require 'oj'
 require 'mongoid'
-require 'ons_data_models/require_all'
 require 'rack/conneg'
-
-require 'presenters/observation_presenter'
+require_relative 'lib/presenters/observation_presenter'
 
 Mongoid.load!(File.expand_path("mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
