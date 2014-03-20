@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :series do
+    sequence(:slug) { |s| "an-series-#{s}" }
+    title "A series"
+    description "A description of this series"
+  end
+
   factory :dataset do
     sequence(:slug) { |s| "an-dataset-#{s}" }
     after(:build) do |dataset|
