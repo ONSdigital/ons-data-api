@@ -8,7 +8,7 @@ end
 
 When(/^I visit the URL for that observation$/) do
   steps %{
-    When I send a GET request to "/series/release/dataset/#{@observation.slug}"
+    When I send a GET request to "/series/series-slug/releases/release-slug/datasets/dataset-slug/observations/#{@observation.slug}"
   } 
 end
 

@@ -39,7 +39,7 @@ class OnsDataApi < Sinatra::Base
     end
   end
 
-  get '/series/release/dataset/:observation' do
+  get '/series/:series/releases/:release/datasets/:dataset/observations/:observation' do
     obs = Observation.where(:slug => params[:observation]).first
     respond_to do |wants|
       wants.json { Oj.dump ObservationPresenter.new(obs).present }
