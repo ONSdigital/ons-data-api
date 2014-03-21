@@ -8,7 +8,8 @@ class ObservationPresenter
     presented = {
       "measure" => @observation.measure,
     }
-    presented.merge(display_dimensions)
+    presented['dimensions'] = display_dimensions
+    presented
   end
 
   def display_dimensions
