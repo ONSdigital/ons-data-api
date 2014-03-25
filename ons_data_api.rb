@@ -37,21 +37,74 @@ class OnsDataApi < Sinatra::Base
     end
   end
 
-  get '/:series' do |slug|
-    series = Series.where(:slug => slug).first
+  get '/series' do
+    series = {}
+    Series.all.each do |s|
+      series[s.slug] = SeriesPresenter.new(s).present
+    end
+
     respond_to do |wants|
-      wants.json { Oj.dump SeriesPresenter.new(series).present }
+      wants.json { Oj.dump series }
       wants.other { error_406 }
     end
   end
+  
+  get '/series/:series' do
+    series = Series.where(:slug => params[:series]).first
+    respond_to do |wants|
+      wants.json { Oj.dump SeriesPresenter.new(series).present }
+      wants.other { error_406 }
+    end    
+  end  
+  
+  get '/series/:series/releases' do
+    series = Series.where(:slug => params[:series]).first
+    releases = {}
+    series.releases.each do |r|
+      releases[r.slug] = ReleasePresenter.new(r).present
+    end  
+    
+    respond_to do |wants|
+      wants.json { Oj.dump releases }
+      wants.other { error_406 }
+    end    
+  end  
+    
+  get '/series/:series/releases/:release' do
+    release = Release.where(:slug => params[:release]).first
+    respond_to do |wants|
+      wants.json { Oj.dump ReleasePresenter.new(release).present }
+      wants.other { error_406 }
+    end    
+  end  
+  
+  get '/series/:series/releases/:release/datasets' do
+    release = Release.where(:slug => params[:release]).first
+    datasets = {}
+    release.datasets.each do |d|
+      datasets[d.slug] = DatasetPresenter.new(d).present
+    end
+    
+    respond_to do |wants|
+      wants.json { Oj.dump datasets }
+      wants.other { error_406 }
+    end    
+  end  
+  
+  get '/series/:series/releases/:release/datasets/:dataset' do
+    obs = Dataset.where(:slug => params[:dataset]).first
+    respond_to do |wants|
+      wants.json { Oj.dump DatasetPresenter.new(obs).present }
+      wants.other { error_406 }
+    end    
+  end  
 
   get '/series/:series/releases/:release/datasets/:dataset/observations/:observation' do
     obs = Observation.where(:slug => params[:observation]).first
     respond_to do |wants|
       wants.json { Oj.dump ObservationPresenter.new(obs).present }
       wants.other { error_406 }
-    end
-    
+    end    
   end
 
   def error_406
