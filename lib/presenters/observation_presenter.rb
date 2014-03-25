@@ -20,7 +20,6 @@ class ObservationPresenter
       display_value = concept_scheme.values[@observation.send(dimension.name)]
       presented[dimension.name] = {
           'title' => dimension.title,
-          'description' => dimension.description,
           'value' => display_value
       }
     end
