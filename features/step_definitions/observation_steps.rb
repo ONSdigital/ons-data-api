@@ -1,6 +1,6 @@
 Given(/^an observation exists in the database$/) do
   options = {
-    measure: 111.5,
+    price_index: 111.5,
     slug: 'abc123'
   }
   @observation = FactoryGirl.create :observation, options
