@@ -3,6 +3,12 @@ require 'oj'
 require 'thin'
 require 'mongoid'
 require 'rack/conneg'
+
+Dir.glob("#{File.dirname(__FILE__)}/lib/**/*.rb").sort.each do |file|
+  require file
+end
+
+require_relative 'lib/presenters/observation_presenter'
 require_relative 'lib/presenters/observation_presenter'
 require_relative 'lib/presenters/series_presenter'
 
