@@ -5,6 +5,15 @@ FactoryGirl.define do
     description "A description of this series"
   end
 
+  factory :release do
+    sequence(:slug) { |s| "a-release-#{s}" }
+    series = FactoryGirl.create(:series)  
+    title "A release"
+    state "published"
+    published "2014-04-01"
+    description "A description of this release"
+  end
+  
   factory :dataset do
     sequence(:slug) { |s| "an-dataset-#{s}" }
     after(:build) do |dataset|
@@ -14,6 +23,7 @@ FactoryGirl.define do
       cdid_concept_scheme = FactoryGirl.create(:cdid_concept_scheme)
       dataset.dimensions = {dimension.id => concept_scheme.id, product_dimension.id => cdid_concept_scheme.id}
       dataset.data_attributes = { }
+      release = FactoryGirl.create(:release)
       FactoryGirl.create(:measure, {dataset: dataset})
     end
   end

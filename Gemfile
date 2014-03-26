@@ -22,5 +22,6 @@ group :development, :test do
   gem 'guard'
   gem 'guard-cucumber'
   gem 'factory_girl'
-  
+  gem 'shotgun'
+
 end

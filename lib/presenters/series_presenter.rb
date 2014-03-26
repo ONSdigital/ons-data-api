@@ -7,7 +7,9 @@ class SeriesPresenter
   def present
     presented = {
       "title" => @series.title,
-      "description" => @series.description
+      "description" => @series.description,
     }
+    presented["contact"] = ContactPresenter.new( @series.contact ).present if @series.contact
+    presented
   end
 end

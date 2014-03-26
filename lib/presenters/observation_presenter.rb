@@ -9,6 +9,8 @@ class ObservationPresenter
     presented = @observation.attributes.reject { |x| x == "_id" || x == "dataset_id"}
     presented['dimensions'] = display_dimensions
     presented['attributes'] = display_attributes
+    presented['measures'] = display_measures
+    presented['dataset'] = DatasetPresenter.new( @observation.dataset ).present      
     presented
   end
 
@@ -42,4 +44,16 @@ class ObservationPresenter
     presented
   end
 
+  def display_measures
+    presented = {}
+    @observation.dataset.measures.each do |measure|
+      presented[ measure.name ] = {
+        'title' => measure.title,
+        'description' => measure.description,
+        'slug' => measure.slug
+      }
+    end
+    presented
+  end
+  
 end
