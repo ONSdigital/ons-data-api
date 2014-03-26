@@ -12,10 +12,19 @@ FactoryGirl.define do
       product_dimension = FactoryGirl.create(:product_dimension)
       concept_scheme = FactoryGirl.create(:concept_scheme)
       cdid_concept_scheme = FactoryGirl.create(:cdid_concept_scheme)
-      dataset.structure = {dimension.id => concept_scheme.id, product_dimension.id => cdid_concept_scheme.id}
+      dataset.dimensions = {dimension.id => concept_scheme.id, product_dimension.id => cdid_concept_scheme.id}
+      dataset.data_attributes = { }
+      FactoryGirl.create(:measure, {dataset: dataset})
     end
   end
 
+  factory :measure do
+    sequence(:slug) { |s| "an-measure-#{s}" }
+    name "price_index"
+    title "Price Index"
+    description "A value based on a series of economic indicators and toads."
+  end
+  
   factory :dimension do
     sequence(:slug) { |s| "an-dimension-#{s}" }
     name "date"
@@ -43,7 +52,7 @@ FactoryGirl.define do
   factory :observation do
     sequence(:slug) { |s| "a-observation-#{s}"}
     dataset
-    measure 60.5
+    price_index 60.5
     date "2013-12"
     cdid "mc6a"
   end
