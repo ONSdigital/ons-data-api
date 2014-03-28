@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ONSdigital/ons_data_models.git
-  revision: 7b6d509cd2569b91e429001a88b12cede93b5791
+  revision: a0110fc6a5cbe6100048e7f7d58a193778792223
   specs:
     ons_data_models (0.0.1)
       mime-types (~> 1.16)
@@ -172,6 +172,7 @@ DEPENDENCIES
   guard-cucumber
   oj (= 2.6.0)
   ons_data_models!
+  pry
   rack-conneg
   rack-test
   rake
