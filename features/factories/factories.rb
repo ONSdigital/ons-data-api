@@ -17,14 +17,16 @@ FactoryGirl.define do
   factory :dataset do
     sequence(:slug) { |s| "an-dataset-#{s}" }
     after(:build) do |dataset|
+      measure = FactoryGirl.create(:measure)
+      measure_concept_scheme = FactoryGirl.create(:measure_concept_scheme)
       dimension = FactoryGirl.create(:dimension)
       product_dimension = FactoryGirl.create(:product_dimension)
       concept_scheme = FactoryGirl.create(:concept_scheme)
       cdid_concept_scheme = FactoryGirl.create(:cdid_concept_scheme)
       dataset.dimensions = {dimension.id => concept_scheme.id, product_dimension.id => cdid_concept_scheme.id}
       dataset.data_attributes = { }
+      dataset.measures = {measure.id => measure_concept_scheme.id}
       release = FactoryGirl.create(:release)
-      FactoryGirl.create(:measure, {dataset: dataset})
     end
   end
 
@@ -33,6 +35,15 @@ FactoryGirl.define do
     name "price_index"
     title "Price Index"
     description "A value based on a series of economic indicators and toads."
+  end
+
+  factory :measure_concept_scheme, class: ConceptScheme do
+    sequence(:slug) { |s| "an-measure-concept-scheme-#{s}" }
+    title "Units of Measure"
+    values {{"price_index" => {
+        "title" => "Price Index"
+        }
+      }}
   end
   
   factory :dimension do
