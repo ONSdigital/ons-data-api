@@ -5,7 +5,7 @@ production:
 development:
   sessions:
     default:
-      database: ons_data_api_development
+      database: ons_poc_data_development
       hosts:
         - localhost
 test:
