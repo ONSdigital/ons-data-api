@@ -10,7 +10,6 @@ class ObservationPresenter
     presented['dimensions'] = display_dimensions
     presented['attributes'] = display_attributes
     presented['measures'] = display_measures
-    presented['dataset'] = DatasetPresenter.new( @observation.dataset ).present      
     presented
   end
 
@@ -30,6 +29,7 @@ class ObservationPresenter
   
   def display_attributes
     presented = {}
+    return {} unless @observation.dataset.data_attributes
     @observation.dataset.data_attributes.each_pair do |attr_id, concept_scheme_id|
       attribute = DataAttribute.find(attr_id)
       concept_scheme = ConceptScheme.find(concept_scheme_id)
@@ -46,6 +46,7 @@ class ObservationPresenter
 
   def display_measures
     presented = {}
+    return {} unless @observation.dataset.measures
     @observation.dataset.measures.each do |measure|
       presented[ measure.name ] = {
         'title' => measure.title,
