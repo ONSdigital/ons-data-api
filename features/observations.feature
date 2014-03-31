@@ -19,7 +19,7 @@ Feature:
     And the JSON response should have "$.dimensions.date.value.title" with the text "December 2013"
     And the JSON response should have "$.dimensions.product.title" with the text "Producer product"
     And the JSON response should have "$.dimensions.product.value.title" with the text "7229110080: Alcoholic Beverages - SPECIAL INDEX FOR USE IN NSO - Manu incl duty"
-    And the JSON response should have "$.measures.price_index.title" with the text "Price Index"
+    And the JSON response should have "$.measures[0].title" with the text "Price Index"
 
   Scenario: fetch a slice of observations
     Given several observations exist in the database

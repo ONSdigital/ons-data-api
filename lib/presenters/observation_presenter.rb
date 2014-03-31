@@ -18,6 +18,7 @@ class ObservationPresenter < ModelPresenter
       display_value = concept_scheme.values[@model.send(dimension.name)]
       presented[dimension.name] = {
           'title' => dimension.title,
+          'description' => dimension.description,
           'value' => display_value
       }
     end
@@ -34,6 +35,7 @@ class ObservationPresenter < ModelPresenter
         display_value = concept_scheme.values[@model.send(attribute.name)]
         presented[attribute.name] = {
             'title' => attribute.title,
+            'description' => attribute.description,
             'value' => display_value
         }
       end
@@ -42,16 +44,13 @@ class ObservationPresenter < ModelPresenter
   end
 
   def display_measures
-    presented = {}
+    presented = []
     return {} unless @model.dataset.measures
-    @model.dataset.measures.each_pair do |measure_id, concept_scheme_id|
+    @model.dataset.measures.each do |measure_id|
       measure = Measure.find(measure_id)
-      concept_scheme = ConceptScheme.find(concept_scheme_id)
       if @model.respond_to?(measure.name)
-        display_value = concept_scheme.values[@model.send(measure.name)]
-        presented[measure.name] = {
+        presented << {
             'title' => measure.title,
-            'value' => display_value,
             'description' => measure.description,
             'slug' => measure.slug
         }
