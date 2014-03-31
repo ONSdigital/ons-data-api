@@ -1,16 +1,12 @@
-class DatasetPresenter
-  
-  def initialize(dataset)
-    @dataset = dataset
-  end
+class DatasetPresenter < ModelPresenter
   
   def present
-    presented = {
-      "title" => @dataset.title,
-      "slug" => @dataset.slug,
-      "description" => @dataset.description,
-      "total_observations" => @dataset.observations.count,
-      "release" => ReleasePresenter.new( @dataset.release ).present
-    }
+    presented = default
+    release = @model.release
+    presented.merge!({
+      "total_observations" => @model.observations.count,
+      "release" => ModelPresenter.new( release ).present
+    })
   end
+  
 end

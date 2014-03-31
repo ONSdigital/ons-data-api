@@ -4,6 +4,7 @@ require 'thin'
 require 'mongoid'
 require 'rack/conneg'
 
+require "#{File.dirname(__FILE__)}/lib/presenters/model_presenter.rb"
 Dir.glob("#{File.dirname(__FILE__)}/lib/**/*.rb").sort.each do |file|
   require file
 end
@@ -61,7 +62,7 @@ class OnsDataApi < Sinatra::Base
     series = Series.where(:slug => params[:series]).first
     releases = {}
     series.releases.each do |r|
-      releases[r.slug] = ReleasePresenter.new(r).present
+      releases[r.slug] = ModelPresenter.new(r).present
     end  
     
     respond_to do |wants|
@@ -82,7 +83,7 @@ class OnsDataApi < Sinatra::Base
     release = Release.where(:slug => params[:release]).first
     datasets = {}
     release.datasets.each do |d|
-      datasets[d.slug] = DatasetPresenter.new(d).present
+      datasets[d.slug] = ModelPresenter.new(d).present
     end
     
     respond_to do |wants|
@@ -94,7 +95,7 @@ class OnsDataApi < Sinatra::Base
   get '/series/:series/releases/:release/datasets/:dataset' do
     dataset = Dataset.where(:slug => params[:dataset]).first
     respond_to do |wants|
-      wants.json { Oj.dump DatasetPresenter.new(dataset).present }
+      wants.json { Oj.dump DatasetPresenter.new( dataset ).present }
       wants.other { error_406 }
     end    
   end
@@ -115,6 +116,11 @@ class OnsDataApi < Sinatra::Base
     data_slice_params = filtered_params.compact
     observations = dataset.get_all_observations_with(data_slice_params.to_h)
 
+    if observations.size == 1
+      status = 303
+      redirect ModelPresenter.url_for(observations.first)
+    end
+    
     respond_to do |wants|
       wants.json { Oj.dump ResultSetPresenter.new(dataset, observations).present }
       wants.other { error_406 }
@@ -124,7 +130,6 @@ class OnsDataApi < Sinatra::Base
   get '/series/:series/releases/:release/datasets/:dataset/observations/:observation' do
     obs = Observation.where(:slug => params[:observation]).first
     obs_presented = ObservationPresenter.new(obs).present
-    obs_presented["dataset"] = DatasetPresenter.new(obs.dataset).present
     respond_to do |wants|
       wants.json { Oj.dump obs_presented }
       wants.other { error_406 }

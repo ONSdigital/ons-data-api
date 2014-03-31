@@ -1,22 +1,19 @@
-class ReleasePresenter
-  
-  def initialize(release)
-    @release = release
-  end
+class ReleasePresenter < ModelPresenter
   
   def present
-    return {} unless @release
-    presented = {
-      "title" => @release.title,
-      "slug" => @release.slug,
-      "description" => @release.description,
-      "published" => @release.published,
-      "notes" => @release.notes,
-      "comments" => @release.comments,
-      "state" => @release.state,
-      "series" => SeriesPresenter.new( @release.series ).present
-    }
-    presented["contact"] = ContactPresenter.new( @release.contact ).present if @release.contact
+    return {} unless @model
+    presented = default
+    presented.merge!({
+      "notes" => @model.notes,
+      "comments" => @model.comments,
+      "state" => @model.state,
+      "series" => ModelPresenter.new( @model.series ).present
+    })
+    presented["contact"] = ContactPresenter.new( @model.contact ).present if @model.contact
+    presented["datasets"] = []
+    @model.datasets.each do |d|
+      presented["datasets"] << ModelPresenter.new(d).present
+    end
     presented
   end
 end
