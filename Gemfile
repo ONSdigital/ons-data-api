@@ -11,7 +11,7 @@ gem 'thin'
 gem 'ons_data_models', github: "ONSdigital/ons_data_models"
 
 group :development, :test do
-  
+  gem 'pry'
   gem 'capybara-webkit'
   gem 'cucumber-sinatra'
   gem 'coveralls', require: false
