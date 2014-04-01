@@ -115,11 +115,6 @@ class OnsDataApi < Sinatra::Base
     # to render all thousands of them
     data_slice_params = filtered_params.compact
     observations = dataset.get_all_observations_with(data_slice_params.to_h)
-
-    if observations.size == 1
-      status = 303
-      redirect ModelPresenter.url_for(observations.first)
-    end
     
     respond_to do |wants|
       wants.json { Oj.dump ResultSetPresenter.new(dataset, observations).present }
