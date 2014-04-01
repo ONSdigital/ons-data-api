@@ -26,5 +26,4 @@ Feature:
     When I visit the URL for querying observations with field "product" and value "mc6a"
     Then the response status should be "200"
     And the response content type should be JSON
-    And the JSON response should have "$.total" with the text "3"
-    And the JSON response should have "$.results[0].product" with the text "MC6A"
+    And the JSON response should have "$[0].product" with the text "MC6A"
