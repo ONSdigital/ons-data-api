@@ -1,26 +1,25 @@
-class ObservationPresenter
-  
-  def initialize(observation)
-    @observation = observation
-  end
+class ObservationPresenter < ModelPresenter
   
   def present
     #remove mongo keys
-    presented = @observation.attributes.reject { |x| x == "_id" || x == "dataset_id"}
+    presented = @model.attributes.reject { |x| x == "_id" || x == "dataset_id"}
+    presented['url'] = ModelPresenter.url_for(@model)
     presented['dimensions'] = display_dimensions
-    presented['attributes'] = display_attributes
+    presented['data_attributes'] = display_attributes
     presented['measures'] = display_measures
+    presented['dataset'] = ModelPresenter.new(@model.dataset).present
     presented
   end
 
   def display_dimensions
     presented = {}
-    @observation.dataset.dimensions.each_pair do |dimension_id, concept_scheme_id|
+    @model.dataset.dimensions.each_pair do |dimension_id, concept_scheme_id|
       dimension = Dimension.find(dimension_id)
       concept_scheme = ConceptScheme.find(concept_scheme_id)
-      display_value = concept_scheme.values[@observation.send(dimension.name)]
+      display_value = concept_scheme.values[@model.send(dimension.name)]
       presented[dimension.name] = {
           'title' => dimension.title,
+          'description' => dimension.description,
           'value' => display_value
       }
     end
@@ -29,14 +28,15 @@ class ObservationPresenter
   
   def display_attributes
     presented = {}
-    return {} unless @observation.dataset.data_attributes
-    @observation.dataset.data_attributes.each_pair do |attr_id, concept_scheme_id|
+    return {} unless @model.dataset.data_attributes
+    @model.dataset.data_attributes.each_pair do |attr_id, concept_scheme_id|
       attribute = DataAttribute.find(attr_id)
       concept_scheme = ConceptScheme.find(concept_scheme_id)
-      if @observation.respond_to?(attribute.name)
-        display_value = concept_scheme.values[@observation.send(attribute.name)]
+      if @model.respond_to?(attribute.name)
+        display_value = concept_scheme.values[@model.send(attribute.name)]
         presented[attribute.name] = {
             'title' => attribute.title,
+            'description' => attribute.description,
             'value' => display_value
         }
       end
@@ -45,16 +45,13 @@ class ObservationPresenter
   end
 
   def display_measures
-    presented = {}
-    return {} unless @observation.dataset.measures
-    @observation.dataset.measures.each_pair do |measure_id, concept_scheme_id|
+    presented = []
+    return {} unless @model.dataset.measures
+    @model.dataset.measures.each do |measure_id|
       measure = Measure.find(measure_id)
-      concept_scheme = ConceptScheme.find(concept_scheme_id)
-      if @observation.respond_to?(measure.name)
-        display_value = concept_scheme.values[@observation.send(measure.name)]
-        presented[measure.name] = {
+      if @model.respond_to?(measure.name)
+        presented << {
             'title' => measure.title,
-            'value' => display_value,
             'description' => measure.description,
             'slug' => measure.slug
         }

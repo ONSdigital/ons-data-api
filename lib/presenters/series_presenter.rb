@@ -1,15 +1,17 @@
-class SeriesPresenter
-  
-  def initialize(series)
-    @series = series
-  end
+class SeriesPresenter < ModelPresenter
   
   def present
-    presented = {
-      "title" => @series.title,
-      "description" => @series.description,
-    }
-    presented["contact"] = ContactPresenter.new( @series.contact ).present if @series.contact
+    presented = default
+    presented["contact"] = ContactPresenter.new( @model.contact ).present if @model.contact
+    presented["releases"] = []
+    @model.releases.where(:state=>"released").order_by(:slug.asc).each do |release|
+      presented["releases"] << ModelPresenter.new( release ).present
+    end
+    latest_release = @model.releases.where(:state=>"released").order_by(:slug.desc).first
+    presented["latest_release"] = ModelPresenter.new( latest_release ).present
+    next_release = @model.releases.where(:state=>"scheduled").order_by(:slug.desc).first
+    presented["next_release"] = ModelPresenter.new( next_release ).present
+
     presented
   end
 end
