@@ -3,8 +3,9 @@ class ObservationPresenter < ModelPresenter
   def present
     #remove mongo keys
     presented = @model.attributes.reject { |x| x == "_id" || x == "dataset_id"}
+    presented['url'] = ModelPresenter.url_for(@model)
     presented['dimensions'] = display_dimensions
-    presented['attributes'] = display_attributes
+    presented['data_attributes'] = display_attributes
     presented['measures'] = display_measures
     presented['dataset'] = ModelPresenter.new(@model.dataset).present
     presented
