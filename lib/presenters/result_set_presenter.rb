@@ -1,5 +1,4 @@
 require_relative 'observation_presenter'
-require 'pry'
 
 class ResultSetPresenter
   
