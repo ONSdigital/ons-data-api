@@ -107,7 +107,7 @@ class OnsDataApi < Sinatra::Base
       if allowed_params.include?(field_name)
         # our data for PPI have uppercase values
         # hack this in here for moment ;(
-        [field_name, value.upcase]
+        [field_name.to_sym, value.upcase]
       end
     end
     # TODO: need paginated results in here
