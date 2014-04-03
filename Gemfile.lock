@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ONSdigital/ons_data_models.git
-  revision: 82eaf88a8b3e64bd8cd34178e43ab8b3db4634ef
+  revision: 2c2f111ab000361e82c01a5bf881f9ec3ed62e26
   specs:
     ons_data_models (0.0.1)
       mime-types (~> 1.16)

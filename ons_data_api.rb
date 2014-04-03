@@ -107,14 +107,15 @@ class OnsDataApi < Sinatra::Base
       if allowed_params.include?(field_name)
         # our data for PPI have uppercase values
         # hack this in here for moment ;(
-        [field_name, value.upcase]
+        [field_name.to_sym, value.upcase]
       end
     end
     # TODO: need paginated results in here
     # If you just hit obersavtions.json with no params, it'll time out trying
     # to render all thousands of them
     data_slice_params = filtered_params.compact
-    observations = dataset.get_all_observations_with(data_slice_params.to_h)
+        
+    observations = dataset.slice(data_slice_params.to_h, params[:"value.type"])
     
     respond_to do |wants|
       wants.json { Oj.dump ResultSetPresenter.new(dataset, observations).present }
