@@ -19,8 +19,10 @@ class DatasetPresenter < ModelPresenter
       concept_scheme = ConceptScheme.find(concept_scheme_id)
       presented[dimension.name] = {
           'title' => dimension.title,
-          'description' => dimension.description #,
-          #'values' => concept_scheme.values
+          'slug' => dimension.slug,
+          'type' => dimension.dimension_type,
+          'description' => dimension.description,
+          'values' => concept_scheme.values.values
       }
     end
     presented
@@ -34,8 +36,8 @@ class DatasetPresenter < ModelPresenter
       concept_scheme = ConceptScheme.find(concept_scheme_id)
       presented[attribute.name] = {
             'title' => attribute.title,
-            'description' => attribute.description#,
-            #'values' => concept_scheme.values
+            'description' => attribute.description,
+            'values' => concept_scheme.values.values
         }
     end
     presented
@@ -43,7 +45,7 @@ class DatasetPresenter < ModelPresenter
 
   def display_measures
     presented = []
-    return {} unless @model.measures
+    return [] unless @model.measures
     @model.measures.each do |measure_id|
       measure = Measure.find(measure_id)
       presented << {
