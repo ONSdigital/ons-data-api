@@ -1,12 +1,19 @@
 class ObservationPresenter < ModelPresenter
   
+  def initialize(model, include_context=true)
+    super(model)
+    @include_context = include_context
+  end
+  
   def present
     #remove mongo keys
     presented = @model.attributes.reject { |x| x == "_id" || x == "dataset_id"}
     presented['url'] = ModelPresenter.url_for(@model)
-    presented['dimensions'] = display_dimensions
-    presented['data_attributes'] = display_attributes
-    presented['measures'] = display_measures
+    if @include_context
+      presented['dimensions'] = display_dimensions
+      presented['data_attributes'] = display_attributes
+      presented['measures'] = display_measures
+    end
     presented['dataset'] = ModelPresenter.new(@model.dataset).present
     presented
   end

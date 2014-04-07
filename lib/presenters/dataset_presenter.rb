@@ -45,7 +45,7 @@ class DatasetPresenter < ModelPresenter
 
   def display_measures
     presented = []
-    return {} unless @model.measures
+    return [] unless @model.measures
     @model.measures.each do |measure_id|
       measure = Measure.find(measure_id)
       presented << {
