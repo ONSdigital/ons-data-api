@@ -32,11 +32,11 @@ Example URIs include:
 * An Observation in a Dataset: `/series/producer-price-index/releases/2014-02-18/datasets/ppi-csdb-ds/observations/mca5-2013may.json`
 * Query over Observations in a Dataset to generate a slice: `/series/producer-price-index/releases/2014-02-18/datasets/ppi-csdb-ds/observations.json?product=MCA5&date=2013APR`
 
-The JSON responses include links between resources to enable navigation between responses.
+The JSON responses use a custom format. The are some standard keys that are present for all objects (e.g. `slug`, `url`) and related objects are described by nested JSON objects.
 
-The frontend application will make several API requests to build each page, e.g. to fetch metadata for an Observation, its Dataset, etc.
+nlinks between resources to enable navigation between responses. The frontend application typically makes several API requests to build each page, e.g. to fetch metadata for an Observation, its Dataset, etc.
 
-The API support for querying is implemented in the [shared data models](https://github.com/ONSdigital/ons_data_models), in the Dataset object. The API query is turned into a Mongo query based on the search parameters with some expansion.
+The API support for querying is implemented in the `[Dataset.slice](https://github.com/ONSdigital/ons_data_models/blob/master/app/models/dataset.rb#L104)` method in the , in the Dataset object. The API query is turned into a Mongo query based on the search parameters with some expansion.
 
 For more background on the design of the API, read [the original design document](http://open-statistics.herokuapp.com/about/technical-architecture) the API designed there is not completely implemented, but the core elements are in place.
 
