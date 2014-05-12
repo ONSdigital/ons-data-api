@@ -20,7 +20,7 @@ The key functionality exposed by the API is:
 * Expose a JSON representation of the key model objects, e.g. Series, Releases, Datasets, and Observations
 * Expose a simple API for querying over the set of Observations associated with a Dataset, e.g. to filter observations to those that match a specific set of dimension values.
 
-Broadly, each of the model objects is exposed as a resource that can be directly accessed through the API, returning a JSON description of the resource. 
+Broadly, each of the model objects is exposed as a resource that can be directly accessed through the API, returning a JSON description of the resource.
 
 Example URIs include:
 
@@ -32,9 +32,9 @@ Example URIs include:
 * An Observation in a Dataset: `/series/producer-price-index/releases/2014-02-18/datasets/ppi-csdb-ds/observations/mca5-2013may.json`
 * Query over Observations in a Dataset to generate a slice: `/series/producer-price-index/releases/2014-02-18/datasets/ppi-csdb-ds/observations.json?product=MCA5&date=2013APR`
 
-The JSON responses use a custom format. The are some standard keys that are present for all objects (e.g. `slug`, `url`) and related objects are described by nested JSON objects.
+The JSON responses use a custom format. The are some standard keys that are present for all objects (e.g. `slug`, `url`). Related objects are described by nested JSON objects, these references don't include the full description of the resource, typically just a url and a title to allow links to be built on web pages and for the API to be traversed.
 
-nlinks between resources to enable navigation between responses. The frontend application typically makes several API requests to build each page, e.g. to fetch metadata for an Observation, its Dataset, etc.
+The frontend application typically makes several API requests to build each page, e.g. to fetch metadata for an Observation, its Dataset, etc.
 
 The API support for querying is implemented in the `[Dataset.slice](https://github.com/ONSdigital/ons_data_models/blob/master/app/models/dataset.rb#L104)` method in the , in the Dataset object. The API query is turned into a Mongo query based on the search parameters with some expansion.
 
